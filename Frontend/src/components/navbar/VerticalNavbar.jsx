@@ -23,7 +23,6 @@ import CloudSyncIcon from '@mui/icons-material/CloudSync';
 import InventoryIcon from '@mui/icons-material/Inventory';
 
 import { Button, Typography, styled, Tooltip } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import theme from '../../theme';
 

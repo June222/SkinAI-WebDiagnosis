@@ -19,7 +19,6 @@ import Test from "../pages/Test"
 const Router = createBrowserRouter([{
     path: '/',
     element: <MainLayout />,
-    errorElement: <ErrorLayout />,
     children: [
         {
             index: true,

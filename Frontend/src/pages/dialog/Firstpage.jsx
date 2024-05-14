@@ -1,6 +1,11 @@
 import React from "react";
 import {Button, Box, Typography} from "@mui/material";
 import Image from "../../static/MainImages/image.png"
+import Noglasses from "../../static/skin disease/icon2.png"
+import Light from "../../static/skin disease/icon3.png"
+import Lipstick from "../../static/skin disease/icon4.png"
+import Child from "../../static/skin disease/icon5.png"
+
 
 const Firstpage = ({setStep}) => {
     return (
@@ -13,25 +18,25 @@ const Firstpage = ({setStep}) => {
                     사용 방법
                 </Typography>
                 <Box display="flex" alignItems="center" sx={{ borderColor: '#000000', border: 1, width:'100%', mb:1}}>
-                    <img src={Image} alt="glasses" style={{ margin: 10, width: 30 }} />
+                    <img src={Noglasses} alt="glasses" style={{ margin: 10, width: 50 }} />
                     <Typography sx={{ ml: 1 }}>
                         안경을 벗고 앞머리가 이마를 덮지 않는지 확인하세요.
                     </Typography>
                 </Box>
                 <Box display="flex" alignItems="center" sx={{ borderColor: '#000000', border: 1, width:'100%', mb:1 }}>
-                    <img src={Image} alt="glasses" style={{margin: 10, width: 30 }} />
+                    <img src={Light} alt="glasses" style={{margin: 10, width: 50 }} />
                     <Typography sx={{ ml: 1 }}>
                         조명이 밝은 환경에 있는지 확인하세요.
                     </Typography>
                 </Box>
                 <Box display="flex" alignItems="center" sx={{ borderColor: '#000000', border: 1, width:'100%', mb:1 }}>
-                    <img src={Image} alt="glasses" style={{margin: 10,  width: 30 }} />
+                    <img src={Lipstick} alt="glasses" style={{margin: 10,  width: 50 }} />
                     <Typography sx={{ ml: 1 }}>
                         화장을 하지 않은 상태에서 테스트하면 더 정확한 결과를 얻을 수 있습니다.
                     </Typography>
                 </Box>
                 <Box display="flex" alignItems="center" sx={{ borderColor: '#000000', border: 1, width:'100%', mb:1 }}>
-                    <img src={Image} alt="glasses" style={{margin: 10,  width: 30 }} />
+                    <img src={Child} alt="glasses" style={{margin: 10,  width: 50 }} />
                     <Typography sx={{ ml: 1 }}>
                         질병이 의심되는 부분만 확대해주세요.
                     </Typography>
