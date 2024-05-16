@@ -1,7 +1,7 @@
 import React from 'react';
 // import CloudIcon from '../../static/images/csrc_logo_white.jpg';
 import { Typography } from '@mui/material';
-import MainIcon from '../../static/MainIcon.png';
+import MainIcon from '../../static/skin disease/logo.png';
 
 const HeaderIcon = (props) => {
     return (

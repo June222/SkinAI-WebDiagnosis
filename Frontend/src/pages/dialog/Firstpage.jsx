@@ -10,7 +10,7 @@ import Child from "../../static/skin disease/icon5.png"
 const Firstpage = ({setStep}) => {
     return (
         <div className="flex items-center justify-center m-10" style={{display: 'flex', flexDirection: 'row' }}>
-            <Box sx={{ padding:10, width: '50%', padding:5, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+            <Box sx={{ backgroundColor:"#FFFFFF", width: '50%', padding:5, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                 <Typography variant='h6'>
                     피부 분석 시작 준비
                 </Typography>
@@ -49,7 +49,7 @@ const Firstpage = ({setStep}) => {
             </Box>
 
 
-            <Box sx={{ backgroundColor: '#E7F5FF', width: '50%', padding:5, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <Box sx={{ width: '50%', padding:5, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <Box className='flex' style={{ display: 'flex', justifyContent: 'center' }}>
                     {[...Array(4)].map((_, index) => (
                         <img key={index} src={Image} className="image" width='50' style={{ margin: 5 }} />

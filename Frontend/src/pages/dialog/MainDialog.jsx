@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Dialog, DialogTitle, DialogContent, DialogActions, Button} from '@mui/material';
-import MainIcon from '../../static/MainIcon.png';
-import Image from '../../static/MainImages/image.png'
-import {Typography} from '@mui/material';
+import React from 'react';
+import { Box, Dialog, DialogTitle, DialogContent } from '@mui/material';
+import MainIcon from '../../static/skin disease/logo.png';
 import Firstpage from './Firstpage';
 import Secondpage from './Secondpage'
+import Thirdpage from './Thirdpage'
 
 
 const MainDialog = ({ open, onClose, step, setStep }) => {
@@ -18,10 +17,11 @@ const MainDialog = ({ open, onClose, step, setStep }) => {
                 </Box>
             </DialogTitle>
             <DialogContent
-                sx={{m:2}}
+                sx={{padding:0, backgroundColor:'#E7F5FF'}}
             >
                 {step==1 ? <Firstpage setStep={setStep} />
-                    : step==2 ? <Secondpage/> : null}
+                    : step==2 ? <Secondpage setStep={setStep}/>
+                    : step==3 ? <Thirdpage setStep={setStep}/> : null}
             </DialogContent>
         </Dialog>
     )

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Typography } from '@mui/material';
-import MainIcon from '../../static/MainIcon.png';
+import MainIcon from '../../static/skin disease/logo.png';
 import Image from '../../static/MainImages/image.png';
 
 const Main = () => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding:70}}>
-            <img src={MainIcon} className="icon" width='100' />
+            <img src={MainIcon} className="icon" alt='aslkj' width='100' />
             <Typography variant='h6' sx={{textAlign:'center', m:6}}>
                 피부 질환 데이터 기반의 헬스케어 플랫폼이며,
                 <br />
@@ -14,17 +14,17 @@ const Main = () => {
             </Typography>
             <Box className='flex' style={{ display: 'flex', justifyContent: 'center' }}>
                 {[...Array(5)].map((_, index) => (
-                    <img key={index} src={Image} className="image" width='100' style={{ margin: 5 }} />
+                    <img key={index} src={Image} alt={`i${index}`} className="image" width='100' style={{ margin: 5 }} />
                 ))}
             </Box>
             <Box style={{ display: 'flex', justifyContent: 'center' }}>
                 {[...Array(5)].map((_, index) => (
-                    <img key={index} src={Image} className="image" width='100' style={{ margin: 5 }} />
+                    <img key={index} src={Image} alt={`ii${index}`} className="image" width='100' style={{ margin: 5 }} />
                 ))}
             </Box>
             <Box style={{ display: 'flex', justifyContent: 'center' }}>
                 {[...Array(5)].map((_, index) => (
-                    <img key={index} src={Image} className="image" width='100' style={{ margin: 5 }} />
+                    <img key={index} src={Image} alt={`iii${index}`} className="image" width='100' style={{ margin: 5 }} />
                 ))}
             </Box>
         </div>
