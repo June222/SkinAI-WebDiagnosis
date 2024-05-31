@@ -22,6 +22,10 @@ const theme = createTheme({
 
 const Community = () => {
 
+    const handleWrite = () => {
+        console.log("글쓰기 버튼 클릭");
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <div>
@@ -29,7 +33,7 @@ const Community = () => {
                 <Box sx={{backgroundColor:"#E7F5FF", minHeight:600, paddingX:10, paddingY:5}}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Search />
-                        <Button variant='contained' sx={{fontWeight:'bold', fontSize:16, borderRadius:5, paddingX:8 }}>
+                        <Button variant='contained' onClick={handleWrite} sx={{fontWeight:'bold', fontSize:16, borderRadius:5, paddingX:8, mr:'10%' }}>
                             글쓰기
                         </Button>
                     </Box>

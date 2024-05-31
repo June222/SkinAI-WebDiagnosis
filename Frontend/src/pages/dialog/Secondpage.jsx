@@ -1,6 +1,6 @@
 import { Typography, Button, CircularProgress, Box } from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react';
-
+import { fetchImageUrl } from '../../services/MainServices';
 export default function App({setStep}) {
   const videoRef = useRef(null);
 
@@ -8,6 +8,36 @@ export default function App({setStep}) {
   const [cameraState, setCameraState] = useState('');
   const [cameraError, setCameraError] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const [uploadImgUrl, setUploadImgUrl] = useState("");
+  const [uploadLoading, setUploadLoading] = useState(false);
+
+  const onchangeImageUpload = (e)=> {
+     const {files} = e.target;
+     const uploadFile = files[0];
+     const reader = new FileReader();
+     reader.readAsDataURL(uploadFile);
+     reader.onloadend = ()=> {
+      setUploadImgUrl(reader.result);
+    }
+  }
+
+  const uploadImage = () => {
+    setUploadLoading(true);
+    console.log(uploadImgUrl);
+    fetchImageUrl(uploadImgUrl)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setStep(3);
+      })
+      .catch(error => {
+        console.error('Error fetching image:', error);
+      })
+      .finally(() => {
+        setUploadLoading(false);
+      });
+  };
 
   const getWebcam = (callback) => {
     try {
@@ -50,6 +80,7 @@ export default function App({setStep}) {
       setLoading(false);
     }));
   }
+
 
   function uploadFile(file) {
     const formData = new FormData();
@@ -99,12 +130,26 @@ export default function App({setStep}) {
   return (
     <div className="flex items-center justify-center m-10" style={{ backgroundColor:'#E7F5FF', display: 'flex', flexDirection: 'row', height: "768px" }}>
       {cameraError ? 
-        <div>
-          <Typography>카메라 인식 불가</Typography>
-          <Button>
-            사진을 불러오실래용?
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%', // Ensure Box takes the full height of its container
+            width: '100%', // Ensure Box takes the full width of its container
+          }}
+        >
+          <Typography variant='h4' sx={{ fontWeight: 'bold', mb:5 }}>카메라 인식 불가</Typography>
+          <input type = "file" accept = "image/*" onChange = {onchangeImageUpload}/>
+          <Button 
+            variant='contained'
+            sx={{fontSize:20, paddingX:5, mt:5, fontWeight:'bold'}}
+            onClick={uploadImage}
+          >
+            {uploadLoading ? <CircularProgress/> : '업로드 하기'}
           </Button>
-        </div>
+        </Box>
         : 
         <div style={{ position: "relative", width: "1024px", height: "768px"}}>
           {loading && (

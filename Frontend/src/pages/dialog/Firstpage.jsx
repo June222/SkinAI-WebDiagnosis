@@ -5,6 +5,7 @@ import Noglasses from "../../static/skin disease/icon2.png"
 import Light from "../../static/skin disease/icon3.png"
 import Lipstick from "../../static/skin disease/icon4.png"
 import Child from "../../static/skin disease/icon5.png"
+import Images from "../../static/skin disease/메인페이지-3-popup.png"
 
 
 const Firstpage = ({setStep}) => {
@@ -47,9 +48,11 @@ const Firstpage = ({setStep}) => {
                     시작하기
                 </Button>
             </Box>
-
-
             <Box sx={{ width: '50%', padding:5, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                <img src={Images} alt="" width={'100%'} />
+            </Box>
+
+            {/* <Box sx={{ width: '50%', padding:5, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <Box className='flex' style={{ display: 'flex', justifyContent: 'center' }}>
                     {[...Array(4)].map((_, index) => (
                         <img key={index} src={Image} className="image" width='50' style={{ margin: 5 }} />
@@ -71,7 +74,7 @@ const Firstpage = ({setStep}) => {
                     ))}
                 </Box>
 
-            </Box>
+            </Box> */}
         </div>
     )
 };

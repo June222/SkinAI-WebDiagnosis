@@ -4,7 +4,7 @@ import {Button, Box, Typography, CircularProgress} from "@mui/material";
 import exampleImage from "../../static/skin disease/피부암 이미지 예시.png";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-const Firstpage = ({setStep}) => {
+const Thirdpage = ({setStep}) => {
     const [loading, setLoading] = useState(true);
 
 
@@ -78,4 +78,4 @@ const Firstpage = ({setStep}) => {
     )
 };
 
-export default Firstpage;
+export default Thirdpage;

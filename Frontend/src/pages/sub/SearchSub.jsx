@@ -28,6 +28,7 @@ export default function CustomizedInputBase() {
         borderRadius: 20,
         border: '2px solid purple', // 입력 상태에 따라 border 색 변경
         backgroundColor: isFocused ? '#fff' : '#f0f0f0', // 입력 상태에 따라 배경색 변경
+        ml: "10%"
       }}
     >
       <InputBase

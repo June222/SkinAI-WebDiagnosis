@@ -12,27 +12,6 @@ const AuthProvider = ({ children }) => {
         isLoading: true,
     });
 
-    useEffect(() => {
-        fetchRefresh()
-            .then((response) => {
-                if (response.ok) {
-                    setAuthState({
-                        isAuthenticated: true,
-                        isLoading: false,
-                    });
-                } else {
-                    setAuthState({
-                        isAuthenticated: false,
-                        isLoading: false,
-                    });
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        console.log('authState - AuthProvider', authState);
-    }, []);
-
     return (
         <AuthContext.Provider value={{ authState, setAuthState }}>
             {children}
