@@ -10,11 +10,11 @@ const Main = () => {
         <div >
             <MainFirst/>
             <MainSecond />
-            <Button 
+            {/* <Button 
                 onClick={fetchTest}
             >
                 test
-            </Button>
+            </Button> */}
         </div>
     )
 }

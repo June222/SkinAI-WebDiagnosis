@@ -1,7 +1,7 @@
 import { Typography, Button, CircularProgress, Box } from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react';
-import { fetchImageUrl } from '../../services/MainServices';
-export default function App({setStep}) {
+
+export default function App({setStep, setUploadImgUrl}) {
   const videoRef = useRef(null);
 
   const [canvasState, setCanvasState] = useState('none');
@@ -9,7 +9,6 @@ export default function App({setStep}) {
   const [cameraError, setCameraError] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const [uploadImgUrl, setUploadImgUrl] = useState("");
   const [uploadLoading, setUploadLoading] = useState(false);
 
   const onchangeImageUpload = (e)=> {
@@ -24,19 +23,7 @@ export default function App({setStep}) {
 
   const uploadImage = () => {
     setUploadLoading(true);
-    console.log(uploadImgUrl);
-    fetchImageUrl(uploadImgUrl)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        setStep(3);
-      })
-      .catch(error => {
-        console.error('Error fetching image:', error);
-      })
-      .finally(() => {
-        setUploadLoading(false);
-      });
+    setStep(3);
   };
 
   const getWebcam = (callback) => {

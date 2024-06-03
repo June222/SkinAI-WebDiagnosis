@@ -18,6 +18,8 @@ const Item = styled(Paper)(({ theme }) => ({
 const ImageContainer = styled('div')({
   position: 'relative',
   cursor: 'pointer',
+  borderRadius: '30px', // 이미지 컨테이너의 모서리를 둥글게 만듭니다.
+  overflow: 'hidden', // 이미지가 모서리를 넘어가지 않도록 합니다.
   '&:hover::after': {
     content: '""',
     position: 'absolute',
@@ -27,6 +29,7 @@ const ImageContainer = styled('div')({
     height: '100%',
     background: 'rgba(0, 0, 0, 0.5)',
     zIndex: 1,
+    borderRadius: '8px', // 그레이 아웃 레이어의 모서리를 둥글게 만듭니다.
   },
   '&::after': {
     content: '""',
@@ -37,6 +40,7 @@ const ImageContainer = styled('div')({
     height: '100%',
     background: 'rgba(0, 0, 0, 0)',
     transition: 'background 0.3s',
+    borderRadius: '8px', // 그레이 아웃 레이어의 모서리를 둥글게 만듭니다.
   },
   '&:hover::before': {
     content: '""',
@@ -59,6 +63,7 @@ const ImageContainer = styled('div')({
     transition: 'color 0.3s',
   },
 });
+
 
 function handleClick(imageNumber) {
   // 클릭한 이미지에 따라 실행할 작업을 수행합니다.

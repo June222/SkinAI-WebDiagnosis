@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Box, Dialog, DialogTitle, DialogContent } from '@mui/material';
 import MainIcon from '../../static/skin disease/logo.png';
 import Firstpage from './Firstpage';
@@ -7,7 +7,8 @@ import Thirdpage from './Thirdpage'
 
 
 const MainDialog = ({ open, onClose, step, setStep }) => {
-
+    const [uploadImgUrl, setUploadImgUrl] = useState("");
+    
     return (
         <Dialog open={open} onClose={onClose} maxWidth="lg" >
             <DialogTitle
@@ -20,8 +21,8 @@ const MainDialog = ({ open, onClose, step, setStep }) => {
                 sx={{padding:0, backgroundColor:'#E7F5FF', minWidth:1000}}
             >
                 {step==1 ? <Firstpage setStep={setStep} />
-                    : step==2 ? <Secondpage setStep={setStep}/>
-                    : step==3 ? <Thirdpage setStep={setStep}/> : null}
+                    : step==2 ? <Secondpage setStep={setStep} setUploadImgUrl={setUploadImgUrl} />
+                    : step==3 ? <Thirdpage setStep={setStep} imgUrl={uploadImgUrl}/> : null}
             </DialogContent>
         </Dialog>
     )

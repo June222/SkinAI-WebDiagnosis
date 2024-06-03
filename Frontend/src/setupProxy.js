@@ -9,11 +9,13 @@ module.exports = function (app) {
         }),
     );
     app.use(
-        '/test',
+        '/ai',
         createProxyMiddleware({
             target: 'https://yeojisu.pythonanywhere.com',
             changeOrigin: true,
-            // pathRewrite: { '^/test': '' },
+            onProxyRes: function (proxyRes, req, res) {
+                proxyRes.headers['Access-Control-Allow-Origin'] = '*';
+            },
         }),
     );
 };
