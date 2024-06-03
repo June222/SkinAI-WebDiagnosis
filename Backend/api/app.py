@@ -11,6 +11,7 @@ from model.database import engine, SessionLocal
 from model.init_database import init_database
 
 from api.v1 import test
+from api.v1 import disease
 
 init_database(engine, SessionLocal())
     
@@ -49,6 +50,7 @@ app = FastAPI(title=settings.PROJECT_NAME,
 # # End CORS
 
 app.include_router(test.router, prefix=settings.API_V1_STR)
+app.include_router(disease.router, prefix=settings.API_V1_STR)
 
 @app.get('/')
 def root():
