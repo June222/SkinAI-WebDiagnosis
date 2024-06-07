@@ -1,6 +1,7 @@
 # DB
 ### /Backend 경로에서 명령어 실행
 1. docker compose up --build
+
 (--build ==> 최초 1회만 수행)
 
 # Fastapi
