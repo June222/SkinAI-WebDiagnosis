@@ -22,6 +22,7 @@
   <img width="419" alt="스크린샷 2024-06-07 오후 3 56 06" src="https://github.com/YeoJiSu/SkinAI-WebDiagnosis/assets/76769044/c38c95e7-41fb-4628-8dea-5a127782cf4a">
 
 ### 🌱 Test 결과 출력
+* Result_of_Classification&Segmentation.ipynb : 모델 로드 해와서 테스트 이미지에 대한 classification & segmentation 결과 추출 
 
 ### 🌱 모델 배포 
 * flask-api : 학습 모델 배포를 위한 flask 프로젝트 
