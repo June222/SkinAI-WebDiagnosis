@@ -13,7 +13,7 @@ const fetchTest = async () => {
 
 const fetchImageUrl = async (imgUrl) => {
     const url = `${AppConfig.ai_base_url}/test`;
-
+    console.log(imgUrl)
     const response = await fetch(url, {
         mode: 'cors',
         method: 'POST',
@@ -21,7 +21,7 @@ const fetchImageUrl = async (imgUrl) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            'image_url': imgUrl,
+            'image_url': 'https://drive.google.com/uc?id=11Q1hNTt-NL_z7fKM7EgJd8t3i8fDPRRI',
         })
     });
 
