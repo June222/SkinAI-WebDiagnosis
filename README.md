@@ -1,4 +1,4 @@
-# 👨🏻‍⚕️ SkinAI-WebDiagnosis 
+# 🧑🏻‍⚕️ SkinAI WebDiagnosis
 
 ## A. 프로젝트 명
 피부 질환 진단 웹 서비스, Dr.Skin
