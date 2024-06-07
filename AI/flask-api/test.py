@@ -69,13 +69,22 @@ class Test(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument("image_url")
         args = parser.parse_args()
-        argument = args["image_url"]
+        image_url = args["image_url"]
+
         # 외부 URL에서 이미지 가져오기
-        # image_data = requests.get(argument).content
-        # 나중에 image_data 활용예정
+        image = fetch_image(image_url)
+        if image is None:
+            return {"error": "Failed to fetch image"}, 400
+
+        # classification 예측 수행
+        cls_image = self.cls_transform(image).unsqueeze(0).to(self.device)
+        with torch.no_grad():
+            output = self.cls_model(cls_image)
+            _, predicted = torch.max(output, 1)
+        predicted_class = self.le.inverse_transform(predicted.cpu().numpy())[0]
 
         # sample값 출력
         predicted_image_name = "sample_seg.png"
         new_url = "https://yeojisu.pythonanywhere.com/image2/"+predicted_image_name
-        label = "MEL" # 'MEL', 'NV', 'BCC', 'AKIEC', 'BKL', 'DF', 'VASC'
-        return {"image_url": new_url, "label": label}, 200
+        
+        return {"image_url": new_url, "label": predicted_class}, 200
