@@ -11,6 +11,15 @@ import random
 import string
 torch.backends.cudnn.benchmark = True
 
+def generate_random_string():
+    # 숫자와 문자를 조합한 문자열 생성
+    characters = string.ascii_letters + string.digits
+    # 10자리에서 20자리까지 랜덤한 길이 선택
+    length = random.randint(10, 20)
+    # 랜덤한 문자열 생성
+    random_string = ''.join(random.choice(characters) for i in range(length))
+    return random_string
+    
 def fetch_image(url):
     try:
         # 세션을 사용하여 요청
@@ -83,8 +92,29 @@ class Test(Resource):
             _, predicted = torch.max(output, 1)
         predicted_class = self.le.inverse_transform(predicted.cpu().numpy())[0]
 
-        # sample값 출력
-        predicted_image_name = "sample_seg.png"
+        # Segmentation 예측 수행
+        seg_image = self.seg_transform(image).unsqueeze(0).to(self.device)
+        with torch.no_grad():
+            output = self.seg_model(seg_image)
+        output_mask = output.squeeze().cpu().numpy()
+        binary_mask = (output_mask > 0.6).astype(np.uint8)
+
+        mask_center_y, mask_center_x = binary_mask.shape[0] // 2, binary_mask.shape[1] // 2
+        image_center_y, image_center_x = image.shape[0] // 2, image.shape[1] // 2
+        centered_mask = np.zeros_like(image[:, :, 0], dtype=np.uint8)
+        start_y = image_center_y - mask_center_y
+        start_x = image_center_x - mask_center_x
+        centered_mask[start_y:start_y + binary_mask.shape[0], start_x:start_x + binary_mask.shape[1]] = binary_mask
+
+        contours, _ = cv2.findContours(centered_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        contours = [cnt for cnt in contours if cv2.contourArea(cnt) > 100]
+        image_with_contours = cv2.drawContours(image.copy(), contours, -1, (0, 0, 255), 6)
+
+        # 랜덤 이미지 이름 생성
+        predicted_image_name = generate_random_string()+".jpg"
+        # 결과 이미지 저장
+        save_path = "/home/yeojisu/mysite/file/image/"+ predicted_image_name
+        cv2.imwrite(save_path, image_with_contours)
         new_url = "https://yeojisu.pythonanywhere.com/image2/"+predicted_image_name
-        
+
         return {"image_url": new_url, "label": predicted_class}, 200
