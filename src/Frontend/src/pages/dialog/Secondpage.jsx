@@ -1,6 +1,11 @@
 import { Typography, Button, CircularProgress, Box } from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react';
 
+
+// https://api.cloudinary.com/v1_1/derecqwux/image/upload
+// preset : zlgtmmib
+
+
 export default function App({setStep, setUploadImgUrl}) {
   const videoRef = useRef(null);
 
@@ -9,20 +14,40 @@ export default function App({setStep, setUploadImgUrl}) {
   const [cameraError, setCameraError] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const [selectedFile, setSelectedFile] = useState(null);
   const [uploadLoading, setUploadLoading] = useState(false);
 
   const onchangeImageUpload = (e)=> {
-     const {files} = e.target;
-     const uploadFile = files[0];
-     const reader = new FileReader();
-     reader.readAsDataURL(uploadFile);
-     reader.onloadend = ()=> {
-      setUploadImgUrl(reader.result);
-    }
+      const {files} = e.target;
+      const uploadFile = files[0];
+      setSelectedFile(uploadFile);
+
   }
 
-  const uploadImage = () => {
+  const uploadImage = async (e) => {
     setUploadLoading(true);
+
+    e.preventDefault();
+    if (!selectedFile) {
+      alert('Please select an image file first!');
+      return;
+    }
+    
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    formData.append('upload_preset', 'zlgtmmib');
+    formData.append('api_key','641351494367948');
+    
+    const response = await fetch('https://api.cloudinary.com/v1_1/derecqwux/image/upload', {
+      method: 'POST',
+      body: formData
+    });
+
+    const data = await response.json();
+    console.log(data);
+    const imageUrl = data.secure_url;
+
+    setUploadImgUrl(imageUrl);
     setStep(3);
   };
 
@@ -53,40 +78,26 @@ export default function App({setStep, setUploadImgUrl}) {
     });
   }, []);
 
-  function GoToCamera(target) {
-    const canvas = document.getElementById("canvas");
-    const context = canvas.getContext('2d');
-    context.scale(-1, 1);
-    context.translate(-1024, 0);
-    context.drawImage(videoRef.current, 0, 0, 1024, 768);
-    setCanvasState('none');
-    setCameraState('');
-    setLoading(true);
-    getWebcam((stream => {
-      videoRef.current.srcObject = stream;
-      setLoading(false);
-    }));
-  }
 
-
-  function uploadFile(file) {
+  const uploadFile = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('upload_preset', 'zlgtmmib');
+    formData.append('api_key','641351494367948');
+
+    const response = await fetch('https://api.cloudinary.com/v1_1/derecqwux/image/upload', {
+      method: 'POST',
+      body: formData
+    });
+
+    const data = await response.json();
+    const imageUrl = data.secure_url;
+
+    setUploadImgUrl(imageUrl);
     setStep(3);
-    // axios.post('YOUR_SERVER_URL_HERE', formData, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data'
-    //   }
-    // })
-    // .then(response => {
-    //   console.log('File upload successful:', response);
-    // })
-    // .catch(error => {
-    //   console.error('Error uploading file:', error);
-    // });
   }
 
-  function sreenShot(target) {
+  function sreenShot() {
     setCanvasState('');
     setCameraState('none');
     const canvas = document.getElementById("canvas");
@@ -99,12 +110,6 @@ export default function App({setStep, setUploadImgUrl}) {
       let file = new File([blob], "fileName.jpg", { type: "image/jpeg" });
       uploadFile(file); // Upload the file to the server
     }, 'image/jpeg');
-
-    const image = canvas.toDataURL();
-    const link = document.createElement("a");
-    link.href = image;
-    link.download = "PaintJS[🎨]";
-    link.click();
 
     const stream = videoRef.current.srcObject;
     if (stream) {
@@ -162,10 +167,7 @@ export default function App({setStep, setUploadImgUrl}) {
           {canvasState === 'none' ?
             <div onClick={sreenShot} style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "70px", height: "70px", margin: "10px", borderRadius: "100px", position: "absolute", zIndex: "1", bottom: '5%', left: "46%", cursor: "pointer", backgroundColor: "white" }}>
               <div style={{ textAlign: "center", width: "60px", height: "60px", border: "2px solid", borderRadius: "100px" }}></div>
-            </div> :
-            <div onClick={GoToCamera} style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "70px", height: "70px", margin: "10px", borderRadius: "10px", position: "absolute", zIndex: "1", bottom: '5%', left: "46%", cursor: "pointer", backgroundColor: "white" }}>
-              <p>다시 촬영</p>
-            </div>
+            </div> : null
           }
         </div>
       }
