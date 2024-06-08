@@ -16,12 +16,18 @@ export default function App({setStep, setUploadImgUrl}) {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadLoading, setUploadLoading] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   const onchangeImageUpload = (e)=> {
       const {files} = e.target;
       const uploadFile = files[0];
       setSelectedFile(uploadFile);
 
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        setPreviewUrl(fileReader.result);
+      };
+      fileReader.readAsDataURL(uploadFile);
   }
 
   const uploadImage = async (e) => {
@@ -134,6 +140,11 @@ export default function App({setStep, setUploadImgUrl}) {
         >
           <Typography variant='h4' sx={{ fontWeight: 'bold', mb:5 }}>카메라 인식 불가</Typography>
           <input type = "file" accept = "image/*" onChange = {onchangeImageUpload}/>
+          {previewUrl && (
+            <Box mt={2}>
+              <img src={previewUrl} alt="preview" style={{ maxWidth: '100%', maxHeight: '300px' }} />
+            </Box>
+          )}
           <Button 
             variant='contained'
             sx={{fontSize:20, paddingX:5, mt:5, fontWeight:'bold'}}
