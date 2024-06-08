@@ -44,7 +44,6 @@
 
 #### ① 데이터셋 분석 및 전처리
 
-
 #### ② Classification 모델 
 
 #### ③ Lesion Segmentation 모델 
@@ -54,6 +53,33 @@
 ### 🌱 웹페이지 개발 결과물 소개
 
 ## G. 개발 결과물을 사용하는 방법 소개 (설치 방법, 동작 방법 등)
+
+### 설치 방법
+
+#### Frontend (src/Frontend/)
+1. npm install
+2. npm start
+
+#### Backend-FastAPI (src/Backend)
+1. python3 -m venv .venv
+2. source .venv/bin/activate
+3. cd api
+4. pip install -r requirements.txt
+5. gunicorn --bind 0.0.0.0:8000 -k uvicorn.workers.UvicornWorker --reload app:app
+
+#### DB-postgreSQL (src/Backend/)
+1. docker compose up --buiild
+   (--build ==> 최초 1회만 수행)
+
+### 동작 방법
+
+#### ① 메인페이지(/index) 에서 '사진 모드 테스트' 버튼 클릭
+
+#### ② Dialog에서 '시작하기' 버튼 클릭
+
+#### ③ 카메라 OR 파일 선택으로 사진 업로드
+
+#### ④ 피부 질환 분석 사진 및 설명 확인
 
 ## H. 개발 결과물의 활용방안 소개
 1. 의료 서비스 접근이 어려운 지역이나 개인에게 자가진단 서비스를 통해서 접근성을 높일 수 있습니다.
