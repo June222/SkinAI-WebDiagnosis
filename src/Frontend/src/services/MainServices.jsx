@@ -21,7 +21,7 @@ const fetchImageUrl = async (imgUrl) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            'image_url': 'https://drive.google.com/uc?id=11Q1hNTt-NL_z7fKM7EgJd8t3i8fDPRRI',
+            'image_url': imgUrl,
         })
     });
 
