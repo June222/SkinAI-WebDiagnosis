@@ -44,11 +44,64 @@
 
 #### ① 데이터셋 분석 및 전처리
 
+✔️ **데이터셋 분석**
+- 총 7 class로 구성
+  - 액티닉 케라토시스와 상피내암/보웬병 (AKIEC), 기저세포암종 (BCC), 양성 각화증성 병변 (BKL), 피부섬유종 (DF), 흑색종 (MEL), 멜라닌성 모반 (NV), 혈관 병변 (VASC)
+- 각 클래스 분포는 불균형을 이루고 있음
+- GroundTruth.csv 파일과 images와 masks 폴더가 있음
+  - GroundTruth.csv 파일에는 image 칼럼과 7개 class 칼럼이 있음
+  - images에는 원본 이미지들이, masks에는 마스크 이미지들이 있음
+  
+✔️ **데이터셋 전처리(공통)**
+- mask 이미지를 활용하여 RLE Encoded Pixels를 생성
+- images, classID, Encoded Pixels로 구성된 newGroundTruth.csv를 생성
+- 클래스별 동일한 비율 8:1:1 유지하여 데이터셋 분리하여 저장. -> TrainData.csv, ValidationData.csv, TestData.csv
+
 #### ② Classification 모델 
+✔️ **데이터셋 전처리**
+- 원본이미지(450 x 600) -> crop (300 x 300) -> resize (128 x 128) -> 증강 (랜덤 회전, 수평/수직 이동, 확대/축소, 수평/수직 flip, 랜덤 밝기 및 대비 조정)
+
+✔️ **모델 구성**
+- Pre-trained EfficientNet B3 <br>
+  <img width="600" alt="스크린샷 2024-06-07 오후 8 18 46" src="https://github.com/YeoJiSu/SkinAI-WebDiagnosis/assets/76769044/35bbb83b-07c3-44cd-93a5-890cbd4bff9b"> 
+
+✔️ **모델 학습 결과**
+- Loss graph of Train & Validation, Accuracy graph of Train & Validation <br>
+  <img width="600" alt="스크린샷 2024-06-07 오후 8 18 46" src="https://github.com/YeoJiSu/SkinAI-WebDiagnosis/assets/76769044/6d52c8dc-3ba9-46be-8786-38b1a1478956">
+- Test Data에 대한 Classification 결과 <br>
+  <img width="400" alt="스크린샷 2024-06-07 오후 8 19 26" src="https://github.com/YeoJiSu/SkinAI-WebDiagnosis/assets/76769044/5e43a52c-049e-45d0-9c94-67f936f99e3b"> <img width="400" alt="스크린샷 2024-06-07 오후 8 22 58" src="https://github.com/YeoJiSu/SkinAI-WebDiagnosis/assets/76769044/f9185b11-3552-46a0-aaef-fa4c98e1d215">
+
+✔️ **Test Data의 정확도: 88%**
 
 #### ③ Lesion Segmentation 모델 
+✔️ **데이터셋 전처리**
+- 원본이미지(450 x 600) -> crop (300 x 300) -> resize (224 x 224) + mask 정보
+
+✔️ **모델 구성**
+- U-Net - Encoder: Pre-trained ResNet34, Weights: Pre-trained ImageNet <br>
+  <img width="600" alt="스크린샷 2024-06-07 오후 8 18 46" src="https://github.com/YeoJiSu/SkinAI-WebDiagnosis/assets/76769044/76ed00d0-ec72-4d1f-a0fe-4e1480ef13a5"> 
+
+✔️ **모델 학습 결과**
+- Loss graph of Train & Validation, IoU graph of Train & Validation, Dice graph of Train & Validation <br>
+  <img width="900" alt="스크린샷 2024-06-07 오후 8 53 52" src="https://github.com/YeoJiSu/SkinAI-WebDiagnosis/assets/76769044/7237ff2a-4185-4548-8147-0c7065330793">
+
+✔️ **Test Data의 IoU: 0.85, Dice: 0.91**
 
 #### ④ 모델 배포 및 예측 api 개발
+
+✔️ **Flask 실행**
+- flask 위한 파일 작성 -> [app.py](https://github.com/YeoJiSu/SkinAI-WebDiagnosis/blob/main/src/AI/flask-api/app.py)
+
+✔️ **모델 배포 및 실행**
+- prediction을 위한 파일 작성 -> [test.py](https://github.com/YeoJiSu/SkinAI-WebDiagnosis/blob/main/src/AI/flask-api/test.py)
+- pythonanywhere 서버에 label_encoder.pkl, cls_model.pth, seg_model.pth 업로드함. <br>
+  <img width="900" alt="스크린샷 2024-06-07 오후 8 53 52" src="https://github.com/YeoJiSu/SkinAI-WebDiagnosis/assets/76769044/ac3dd8c0-251c-4b71-bb02-6b298342a566">
+
+✔️ **pythonanywhere에 Flask api 배포**
+- https://yeojisu.pythonanywhere.com/test/ 에 POST request로 body에 json 데이터 형식 {"image_url": "예측할 이미지 url"} 작성하여 전송
+- 응답값 {"image_url": "mask 생성된 Image Url", “label”: “Predicted Class”} 이 나옴 <br>
+  <img width="797" alt="337548075-95b51bf1-e830-4900-8f41-8f17f6ce116d" src="https://github.com/YeoJiSu/SkinAI-WebDiagnosis/assets/76769044/d7762fcb-eeea-4aea-b7ba-02145a3bfff4">
+
 
 ### 🌱 웹페이지 개발 결과물 소개
 
@@ -66,13 +119,18 @@
 - 다른 사람들과 소통할 수 있는 페이지
 - 핵심 기능은 아니므로 구현하지 않았음. 추후 구현 예정
 
+
+
 ## G. 개발 결과물을 사용하는 방법 소개 (설치 방법, 동작 방법 등)
 
-### 설치 방법
+### 🌱 설치 방법
 
 #### Frontend (src/Frontend/)
 1. npm install
 2. npm start
+
+#### Backend-Flask (src/AI/flask-api)
+1. flask run 또는 python app.py
 
 #### Backend-FastAPI (src/Backend)
 1. python3 -m venv .venv
@@ -85,8 +143,9 @@
 1. docker compose up --buiild
    (--build ==> 최초 1회만 수행)
 
-### 동작 방법
-
+### 🌱 동작 방법
+> 💡 동작 영상 url:  https://photos.app.goo.gl/FnREN8LpcbR5id368
+> 
 #### ① 메인페이지(/index) 에서 '사진 모드 테스트' 버튼 클릭
 
 #### ② Dialog에서 '시작하기' 버튼 클릭
@@ -94,6 +153,8 @@
 #### ③ 카메라 OR 파일 선택으로 사진 업로드
 
 #### ④ 피부 질환 분석 사진 및 설명 확인
+
+![KakaoTalk_Video_2024-06-09-12-37-37-ezgif com-speed](https://github.com/YeoJiSu/SkinAI-WebDiagnosis/assets/76769044/53cdbdb9-663d-4dd1-839f-2de87b901ef2)
 
 ## H. 개발 결과물의 활용방안 소개
 1. 의료 서비스 접근이 어려운 지역이나 개인에게 자가진단 서비스를 통해서 접근성을 높일 수 있습니다.
