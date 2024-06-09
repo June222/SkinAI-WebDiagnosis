@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dr.Skin</title>
+    <style>
+        body {
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            font-family: "Malgun Gothic", "굴림", "Gulim", "Arial";
+        }
+        .middle {
+            text-align: center;
+            background-color: #E8F5FF;
+            display: flex;
+        }
+        .middle_text {
+            color: black;
+            width: inherit;
+            font-size: 25px;
+            min-width: 60%;
+            margin-top: 8%;
+        }
+        .middle button {
+            border-color: #6945FF;
+            border-width: 4px;
+            border-radius: 30px;
+            background-color: inherit;
+            color: #6945FF;
+            width: 20%;
+            padding: 20px;
+            margin: 20px;
+            margin-top: 40px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .middle button:hover {
+            background-color: #6945FF;
+            color: white;
+            cursor: pointer;
+        }
+        .modal {
+            display: none; /* Initially hidden */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; /* Center modal vertically and horizontally */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%; /* Could be more or less, depending on screen size */
+            height: 75%;
+        }
+        .close {
+            float: right; /* Move close button to the right */
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function openModal(modalId, externalUrl) {
+            var modal = document.getElementById(modalId);
+            var modalContent = modal.querySelector('.modal-content');
+            modal.style.display = "block";
+            fetch(externalUrl)
+                .then(response => response.text())
+                .then(html => {
+                    modalContent.innerHTML = html;
+                })
+                .catch(error => console.error('Error fetching external content: ', error));
+        }
+        function closeModal(modalId) {
+            var modal = document.getElementById(modalId);
+            modal.style.display = "none";
+        }
+        function loadExternalContent(url, containerId) {
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById(containerId).innerHTML = html;
+                })
+                .catch(error => console.error('Error fetching external content: ', error));
+        }
+        window.onload = function() {
+            loadExternalContent('/navbar', 'navbar');
+        }
+    </script>
+</head>
+<body>
+    <div id="navbar"></div>
+    <div class="middle">
+        <div class="middle_text">
+            <h5 style="color: #6945FF;">AI 피부 질환 분석 솔루션 SDK</h5>
+            <h1>당신의 미래를 위한<br>
+            AI 피부 질환 분석 솔루션</h1>
+            <p style="font-size: 18px;">바쁠 때, 단 한 번의 사진 촬영을 통해 자가 진단해보세요!<br>
+            온라인에서 피부 질환 분석 서비스를 받아볼 수 있습니다.</p>
+            <button id="photoBtn" onclick="openModal('photoModal', '/photo')">사진 모드 테스트</button>
+            <button id="liveBtn" onclick="openModal('liveModal', '/live')">라이브 모드 테스트</button>
+
+        </div>
+        <img src="/img/main" width="30%">
+        
+        <div id="photoModal" class="modal">
+            <span class="close" onclick="closeModal('photoModal')">&times;</span>
+            <div class="modal-content"></div>
+        </div>
+
+        <div id="liveModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('liveModal')">&times;</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
