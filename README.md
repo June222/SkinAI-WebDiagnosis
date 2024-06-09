@@ -6,7 +6,7 @@
 ## B. 프로젝트 멤버 이름 및 멤버 별 담당한 파트 소개
 |201824441 김승혁  &nbsp;  &nbsp;  &nbsp; 201924587 조주은 &nbsp; |202055565 여지수|
 |:----------|:---|
-|• React 프론트엔드 개발<br>• Proxy 서버 구축<br>• CORS 구현<br>• Postgresql  데이터베이스 구축<br>• Fast API 백엔드 개발<br>• Docker 배포| • Figma 작성<br>• 데이터 분석 및 전처리, AI (분류, 세그멘테이션) 모델 개발<br>• AI 모델 배포용 Flask Rest API 개발<br>• PythonAnywhere 배포|
+|• React 프론트엔드 개발<br>• Proxy 서버 구축<br>• CORS 구현<br>• Postgresql  데이터베이스 구축<br>• Fast API 백엔드 개발<br>• Docker 배포| • [Figma 작성](https://www.figma.com/design/d7kHfNE52tT625W46LA6Mj/skin-disease?node-id=0-1)<br>• 데이터 분석 및 전처리, AI (분류, 세그멘테이션) 모델 개발<br>• AI 모델 배포용 Flask Rest API 개발<br>• PythonAnywhere 배포|
 
 ## C. 프로젝트 소개 
 > 💡 피부 질환 분류 및 세그멘테이션을 위한 인공지능 모델과 웹 기반 진단 서비스 개발
